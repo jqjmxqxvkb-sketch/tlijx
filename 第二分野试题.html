@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>JAC建築分野特定技能2号：安全衛生・法令 模擬試験</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            background: #f0f4f8;
+            font-family: 'Segoe UI', 'Meiryo', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .cbt-container {
+            max-width: 950px;
+            width: 100%;
+            background: white;
+            border-radius: 32px;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.15);
+            overflow: hidden;
+            padding: 20px 25px 35px 25px;
+            transition: all 0.2s;
+        }
+        h1 {
+            font-size: 1.7rem;
+            font-weight: bold;
+            border-left: 7px solid #d97706;
+            padding-left: 18px;
+            color: #78350f;
+            margin-bottom: 8px;
+        }
+        .sub {
+            color: #b45309;
+            margin-bottom: 25px;
+            font-size: 0.9rem;
+            border-bottom: 1px solid #fed7aa;
+            padding-bottom: 12px;
+        }
+        .question-panel {
+            background: #fefefe;
+            border-radius: 28px;
+            padding: 20px 25px;
+            margin: 20px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border: 1px solid #ffedd5;
+        }
+        .question-text {
+            font-size: 1.35rem;
+            font-weight: bold;
+            line-height: 1.4;
+            margin-bottom: 25px;
+            background: #fff7ed;
+            padding: 15px 18px;
+            border-radius: 24px;
+            color: #431407;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+            margin-bottom: 20px;
+        }
+        .opt-btn {
+            background: #f9fafc;
+            border: 2px solid #fed7aa;
+            border-radius: 60px;
+            padding: 12px 20px;
+            font-size: 1rem;
+            font-weight: 500;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-family: inherit;
+            color: #332211;
+        }
+        .opt-btn:hover {
+            background: #fffbeb;
+            border-color: #f59e0b;
+            transform: scale(0.99);
+        }
+        .opt-prefix {
+            font-weight: bold;
+            font-size: 1.2rem;
+            width: 32px;
+            display: inline-block;
+            color: #b45309;
+        }
+        .selected-option {
+            background: #fef3c7;
+            border-color: #f59e0b;
+            box-shadow: 0 2px 6px rgba(245,158,11,0.2);
+        }
+        .feedback {
+            margin-top: 20px;
+            padding: 12px 18px;
+            border-radius: 28px;
+            font-size: 0.9rem;
+            background: #f1f5f9;
+            border-left: 6px solid #f59e0b;
+        }
+        .nav-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 15px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        button {
+            background: #d97706;
+            border: none;
+            color: white;
+            font-weight: bold;
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: inherit;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        button:active {
+            transform: scale(0.96);
+        }
+        button.secondary {
+            background: #78716c;
+        }
+        button.primary {
+            background: #b45309;
+        }
+        button:disabled {
+            background: #d6d3d1;
+            cursor: not-allowed;
+        }
+        .score-area {
+            background: #fffbeb;
+            padding: 12px 20px;
+            border-radius: 40px;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.1rem;
+            border: 1px solid #fde68a;
+        }
+        .toggle-result {
+            margin-top: 20px;
+            background: #fefce8;
+            border-radius: 28px;
+            padding: 10px 15px;
+        }
+        hr {
+            margin: 20px 0;
+            border-color: #fde68a;
+        }
+        .bold {
+            font-weight: bold;
+        }
+        .mistake-item {
+            font-size: 0.85rem;
+            border-bottom: 1px solid #fed7aa;
+            padding: 12px 5px;
+        }
+        .mistake-letter {
+            font-weight: bold;
+            background: #ffedd5;
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-right: 10px;
+        }
+        .correct-ans {
+            color: #2b6e2f;
+            font-weight: bold;
+        }
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 25px;
+            color: #9c7b4d;
+        }
+        @media (max-width: 550px) {
+            .cbt-container { padding: 15px; }
+            .question-text { font-size: 1.1rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="cbt-container" id="cbtApp">
+    <h1>🪪 分野2：安全衛生・法令</h1>
+    <div class="sub">JAC 建築分野 特定技能2号  CBT模擬試験（Ver. Trial）| 全20問 | 合格基準85%以上</div>
+
+    <div class="question-panel">
+        <div class="question-text" id="questionText">問題を読み込み中...</div>
+        <div class="options" id="optionsContainer"></div>
+        <div class="feedback" id="feedbackArea">💡 選択肢をクリックして回答。全問終了後「採点＆結果表示」で評価。</div>
+    </div>
+
+    <div class="nav-area">
+        <button id="prevBtn" class="secondary">◀ 前の問題</button>
+        <span id="qCounter" style="font-weight:bold; background:#fef3c7; padding:5px 14px; border-radius:30px;">1 / 20</span>
+        <button id="nextBtn" class="secondary">次の問題 ▶</button>
+        <button id="submitBtn" class="primary">📋 採点＆結果表示</button>
+    </div>
+
+    <div id="scorePanel" class="score-area" style="display: none;"></div>
+
+    <div class="toggle-result" id="mistakeAreaWrapper" style="display: none;">
+        <hr>
+        <div style="display: flex; justify-content: space-between; align-items: baseline;">
+            <strong style="font-size:1rem;">📘 誤答履歴（選択肢内容＋正答＋解説付き）</strong>
+            <button id="downloadTxtBtn" style="background:#a16207; padding:6px 14px;">⬇️ テキスト保存 (.txt)</button>
+        </div>
+        <div id="mistakeList" style="max-height: 300px; overflow-y: auto; margin-top: 12px;"></div>
+        <p style="font-size:0.7rem; margin-top:10px;">※未回答も誤答扱い。正解問題はリストに含まれません。</p>
+    </div>
+    <footer>⛑️ 安全衛生管理体制・関係法令（安衛法・建設業法等）の知識を問う20問</footer>
+</div>
+
+<script>
+    // ---------- 第2分野：安全衛生・法令 20問 ----------
+    const QUESTIONS = [
+        { text: "労働安全衛生法の目的として最も適切なものはどれか。", options: ["A. 建設工事のコスト削減を図ること", "B. 労働災害の防止と安全で健康な職場環境の確保", "C. 労働時間の最大延長を認めること", "D. 企業の利益を最優先にすること"], correct: "B", explanation: "労働安全衛生法の目的は労働者の安全と健康を確保し、快適な職場環境を形成することです。" },
+        { text: "建設現場における「元方安全管理者」の役割として誤っているものはどれか。", options: ["A. 統括安全衛生管理を実施する", "B. 下請け業者を含めた現場全体の安全巡視", "C. 労働者からの意見を無視して一方的にルールを決める", "D. 安全計画の策定と関係者への周知"], correct: "C", explanation: "元方安全管理者は意見を尊重し、協議を重ねながら安全活動を推進する役割があります。一方的な決定は誤り。" },
+        { text: "「作業主任者」を選任すべき作業として法令で定められていないものはどれか。", options: ["A. コンクリート破砕作業", "B. 足場の組立て・解体作業", "C. ボイラー取扱作業", "D. 酸素欠乏危険作業"], correct: "A", explanation: "コンクリート破砕作業は作業主任者の選任義務がなく、足場・ボイラー・酸素欠乏作業は法律で定められています。" },
+        { text: "墜落防止措置として労働安全衛生規則で義務付けられているものを選べ。", options: ["A. 高さ2メートル以上の場所での作業には手すり・安全帯等の措置", "B. 高さ1メートル以上でネットを設置", "C. 足場の床材は紙でも可", "D. ヘルメットのみで墜落防止は不要"], correct: "A", explanation: "高さ2m以上の作業では、手すり、安全帯、開口部の覆いなどの墜落防止措置が法令で義務付けられています。" },
+        { text: "建設現場で「安全データシート(SDS)」が対象とするものはどれか。", options: ["A. 機械の運転マニュアル", "B. 化学物質・有害物の性状と取扱い情報", "C. 現場の見取り図", "D. 労働保険の申請書"], correct: "B", explanation: "SDSは化学物質等の危険有害性を伝達するための文書であり、安全衛生法令で通達が義務付けられています。" },
+        { text: "労働安全衛生法に基づく「安全衛生教育」が必要な場合とは？", options: ["A. 雇入れ時の安全衛生教育", "B. 作業内容変更時の教育", "C. 危険有害業務への配置換え時", "D. 上記全て"], correct: "D", explanation: "雇入れ時・作業内容変更時・危険業務配置換え時には、法令で安全衛生教育の実施が定められています。" },
+        { text: "「有機溶剤中毒予防規則」において、換気が不十分な屋内作業場での措置として不適切なものは？", options: ["A. 局部排気装置の設置", "B. 防毒マスクの使用", "C. 作業者が自らの判断で換気扇を停止できる", "D. 有機溶剤濃度の測定"], correct: "C", explanation: "作業者が任意に換気装置を停止することは危険であり、絶対に許されません。規則で運転維持が義務付けられています。" },
+        { text: "「足場」に関する基準で正しいものはどれか。", options: ["A. 組み立て・解体に資格は不要", "B. 足場の組み立て等作業は技能講習修了者等が行う", "C. 地上からの高さが5m未満なら手すり不要", "D. 飛散防止シートは任意"], correct: "B", explanation: "足場の組立て等は法定の技能講習修了者等が行うことが義務付けられています。高さに関わらず墜落防止措置が必要です。" },
+        { text: "「酸素欠乏症等防止規則」で定められている場所は次のうちどれか。", options: ["A. ビルの屋上", "B. 地下槽、マンホール、タンク内部", "C. 開放的平地", "D. 軽量コンクリート製造工場の事務所"], correct: "B", explanation: "酸素欠乏のおそれがあるのは地下タンク、マンホール、沈殿槽等の密閉・換気不十分な場所です。" },
+        { text: "「安全帯」使用の義務が生じる作業高さの基準（労働安全衛生規則）は次のうちどれか。", options: ["A. 地面から1.5m以上", "B. 地面から3m以上", "C. 地面から2m以上", "D. 常に必要"], correct: "C", explanation: "労働安全衛生規則第518条により、高さ2m以上の場所で作業する場合、安全帯等を使用することが義務付けられています。" },
+        { text: "「建設業法」における主任技術者・監理技術者の役割の説明として正しいものはどれか。", options: ["A. 現場経費の節約のみ担当", "B. 施工計画に基づく技術上の管理を行う", "C. 労務者の採用権限を持つ", "D. 安全書類の押印だけ"], correct: "B", explanation: "建設業法では主任技術者等は施工計画に従い技術上の管理を実施し、発注者へ説明する役割を負います。" },
+        { text: "「クレーン等安全規則」において、床上操作式クレーンの定期自主検査の頻度は？", options: ["A. 1年以内ごとに1回", "B. 毎月", "C. 1ヶ月以内ごとに1回", "D. 3ヶ月以内ごとに1回"], correct: "C", explanation: "クレーン等安全規則では定期自主検査は1ヶ月以内ごとに1回行うことが義務付けられています。" },
+        { text: "「元方安全衛生管理者」を選任しなければならない建設現場の規模要件（労働安全衛生法）は？", options: ["A. 常時50人以上の労働者が働く現場", "B. すべての現場必置", "C. 常時30人未満は不要", "D. 延べ面積1000平方メートル以上"], correct: "A", explanation: "労働安全衛生法施行令第3条において、元方安全管理者は常時50人以上の労働者が働く建設現場に選任義務があります。" },
+        { text: "電気工事などで「感電防止」対策として誤っている行為はどれか。", options: ["A. 漏電遮断器の設置", "B. アースの確実な施工", "C. 濡れた手でコンセントを触る", "D. ツールの二重絶縁構造の使用"], correct: "C", explanation: "濡れた手での感電リスクは極めて高く、基本安全ルール違反です。その他の選択肢は正しい防止策です。" },
+        { text: "「石綿障害予防規則」で定められている石綿使用建築物の解体作業で義務付けられているものは？", options: ["A. 作業区域の隔離・ばく露防止対策等", "B. 特別な対策不要", "C. 普通のマスクで良い", "D. 作業後シャワー不要"], correct: "A", explanation: "石綿作業では飛散防止のための隔離や呼吸用保護具、除染設備等が規則で義務付けられています。" },
+        { text: "「安全衛生委員会」の設置が義務付けられている事業場の規模は（労働安全衛生法）？", options: ["A. 常時50人以上の従業員（建設業等）", "B. 10人未満", "C. 全ての事業場で任意", "D. 500人以上"], correct: "A", explanation: "労働安全衛生法により、常時50人以上の労働者を使用する事業場（一定業種）で安全衛生委員会の設置が義務付けられています。" },
+        { text: "建設現場における「ヒヤリハット活動」の意義として適切なものはどれか。", options: ["A. 事故を起こした者を処罰する資料とする", "B. 災害に至らなかった危険事例を共有し再発防止に役立てる", "C. 単なる報告書作成作業", "D. 作業効率を落とすための活動"], correct: "B", explanation: "ヒヤリ・ハット活動は潜在リスクを顕在化させ、安全教育や対策に活用する自主活動です。" },
+        { text: "「労働災害発生時の報告」に関して、労働安全衛生法で求められる報告先は？", options: ["A. 近隣住民", "B. 所轄労働基準監督署長", "C. 取引先", "D. 消防署のみ"], correct: "B", explanation: "労働死傷災害が発生した場合、労働基準監督署長への報告義務があります（死傷病報告）。" },
+        { text: "「仮設電気設備」の点検の義務について正しいものは？", options: ["A. 三年点検のみ", "B. 使用前点検及び定期点検が必要", "C. 点検記録不要", "D. 電気工事士が常駐すれば不要"], correct: "B", explanation: "仮設電気設備は漏電・感電防止のため、作業開始前の点検及び定期的な点検が必須です。" },
+        { text: "「建設現場における粉じん対策」として法令上求められることは？", options: ["A. 散水・換気・局所排気などの抑制措置", "B. 対策なしで作業継続", "C. 目の保護のみで良い", "D. 粉じんが多くてもマスク任意"], correct: "A", explanation: "粉じん発生作業では、散水、換気、排気設備等の抑制措置を講じることが法令で求められます。" }
+    ];
+
+    // アプリケーション状態
+    let currentIndex = 0;
+    let userAnswers = new Array(QUESTIONS.length).fill(null);
+    let submitted = false;
+    let score = 0;
+    let mistakes = [];
+
+    // DOM
+    const questionTextEl = document.getElementById('questionText');
+    const optionsContainer = document.getElementById('optionsContainer');
+    const feedbackArea = document.getElementById('feedbackArea');
+    const prevBtn = document.getElementById('prevBtn');
+    const nextBtn = document.getElementById('nextBtn');
+    const submitBtn = document.getElementById('submitBtn');
+    const scorePanel = document.getElementById('scorePanel');
+    const mistakeAreaWrapper = document.getElementById('mistakeAreaWrapper');
+    const mistakeListDiv = document.getElementById('mistakeList');
+    const downloadTxtBtn = document.getElementById('downloadTxtBtn');
+    const qCounterSpan = document.getElementById('qCounter');
+
+    function renderCurrentQuestion() {
+        if (!QUESTIONS.length) return;
+        const q = QUESTIONS[currentIndex];
+        questionTextEl.innerText = `Q${currentIndex+1}. ${q.text}`;
+        const letters = ['A','B','C','D'];
+        let optsHtml = '';
+        q.options.forEach((opt, idx) => {
+            const letter = letters[idx];
+            const isSelected = (userAnswers[currentIndex] === letter);
+            const selectedClass = isSelected ? 'selected-option' : '';
+            optsHtml += `<div class="opt-btn ${selectedClass}" data-choice="${letter}">
+                            <span class="opt-prefix">${letter}.</span><span>${opt}</span>
+                         </div>`;
+        });
+        optionsContainer.innerHTML = optsHtml;
+        document.querySelectorAll('.opt-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                if (submitted) {
+                    feedbackArea.innerHTML = "⚠️ 採点済みです。新たな試験を受ける場合はページをリロードしてください。";
+                    return;
+                }
+                const choice = btn.getAttribute('data-choice');
+                userAnswers[currentIndex] = choice;
+                feedbackArea.innerHTML = `📌 回答: ${choice} を選択しました。次の問題へ進めます。`;
+                renderCurrentQuestion(); // 選択スタイル更新
+            });
+        });
+        qCounterSpan.innerText = `${currentIndex+1} / ${QUESTIONS.length}`;
+        if (submitted) {
+            // 採点済みでも選択スタイルは見えるがクリックは不能
+            const allBtns = document.querySelectorAll('.opt-btn');
+            allBtns.forEach(btn => {
+                btn.style.cursor = 'not-allowed';
+                btn.style.opacity = '0.7';
+            });
+        } else {
+            const allBtns = document.querySelectorAll('.opt-btn');
+            allBtns.forEach(btn => {
+                btn.style.cursor = 'pointer';
+                btn.style.opacity = '1';
+            });
+        }
+    }
+
+    function gradingAndShowResult() {
+        if (submitted) {
+            feedbackArea.innerHTML = "既に採点済みです。再採点するには更新してください。";
+            return;
+        }
+        let correctCount = 0;
+        const newMistakes = [];
+        for (let i = 0; i < QUESTIONS.length; i++) {
+            const q = QUESTIONS[i];
+            const userChoice = userAnswers[i];
+            const correctLetter = q.correct;
+            if (userChoice && userChoice === correctLetter) {
+                correctCount++;
+            } else {
+                newMistakes.push({
+                    questionIndex: i,
+                    selectedLetter: userChoice || "(未回答)",
+                    correctLetter: correctLetter,
+                    explanation: q.explanation,
+                    questionText: q.text,
+                    options: [...q.options]
+                });
+            }
+        }
+        score = correctCount;
+        const total = QUESTIONS.length;
+        const percent = (score / total) * 100;
+        const isPass = percent >= 85;
+        mistakes = newMistakes;
+
+        scorePanel.style.display = "block";
+        const passMark = isPass ? "✅ 合格 (85%以上基準)" : "❌ 不合格 再学習が必要です";
+        scorePanel.innerHTML = `<span class="bold">📊 採点結果: ${score} / ${total} 正解 (${percent.toFixed(1)}%)</span><br>${passMark}`;
+        
+        if (mistakes.length > 0) {
+            mistakeAreaWrapper.style.display = "block";
+            renderMistakeList();
+        } else {
+            mistakeAreaWrapper.style.display = "block";
+            mistakeListDiv.innerHTML = `<div style="padding:12px; background:#e6f7e6; border-radius:24px;">🏆 全問正解！安全衛生・法令の理解が素晴らしいです。🏆</div>`;
+        }
+        submitted = true;
+        feedbackArea.innerHTML = `採点完了しました。${isPass ? '合格おめでとうございます。' : '間違いを復習しましょう。'} 誤答リストから詳細を確認できます。`;
+        renderCurrentQuestion(); // 選択肢を非活性スタイル更新
+    }
+
+    function renderMistakeList() {
+        if (mistakes.length === 0) return;
+        let html = '';
+        mistakes.forEach(m => {
+            const qNum = m.questionIndex + 1;
+            const lettersMap = { A:0, B:1, C:2, D:3 };
+            let selectedFull = "", correctFull = "";
+            if (m.options && m.options.length) {
+                if (m.selectedLetter !== "(未回答)" && lettersMap[m.selectedLetter] !== undefined) {
+                    selectedFull = m.options[lettersMap[m.selectedLetter]];
+                } else if (m.selectedLetter === "(未回答)") selectedFull = "【未選択】";
+                else selectedFull = m.selectedLetter;
+                if (lettersMap[m.correctLetter] !== undefined) correctFull = m.options[lettersMap[m.correctLetter]];
+                else correctFull = m.correctLetter;
+            } else {
+                selectedFull = m.selectedLetter;
+                correctFull = m.correctLetter;
+            }
+            html += `<div class="mistake-item">
+                        <div><strong>問${qNum}: ${m.questionText}</strong></div>
+                        <div>📌 <span class="mistake-letter">あなたの選択: ${m.selectedLetter}</span> → ${selectedFull}</div>
+                        <div>✅ <span class="correct-ans">正答: ${m.correctLetter}</span> → ${correctFull}</div>
+                        <div>📖 解説: ${m.explanation}</div>
+                    </div>`;
+        });
+        mistakeListDiv.innerHTML = html;
+    }
+
+    function downloadMistakesTxt() {
+        if (!submitted) { alert("採点後に誤答テキストを保存できます。"); return; }
+        if (mistakes.length === 0) { alert("全て正解のため誤答リストはありません。"); return; }
+        let content = `【JAC建築分野 特定技能2号】分野2：安全衛生・法令 誤答記録\n`;
+        content += `試験日: ${new Date().toLocaleString()}\n`;
+        content += `正答率: ${((score/QUESTIONS.length)*100).toFixed(1)}% (${score}/${QUESTIONS.length})\n`;
+        content += `----------------------------------------------------------------\n\n`;
+        mistakes.forEach(m => {
+            const qNum = m.questionIndex + 1;
+            const lettersIdx = { A:0,B:1,C:2,D:3 };
+            let selectedDetail = "", correctDetail = "";
+            if (m.options) {
+                if (m.selectedLetter !== "(未回答)" && lettersIdx[m.selectedLetter] !== undefined) selectedDetail = m.options[lettersIdx[m.selectedLetter]];
+                else if (m.selectedLetter === "(未回答)") selectedDetail = "回答なし";
+                else selectedDetail = m.selectedLetter;
+                if (lettersIdx[m.correctLetter] !== undefined) correctDetail = m.options[lettersIdx[m.correctLetter]];
+                else correctDetail = m.correctLetter;
+            }
+            content += `問${qNum}: ${m.questionText}\n`;
+            content += `【選択肢内容】\nA: ${m.options[0]}\nB: ${m.options[1]}\nC: ${m.options[2]}\nD: ${m.options[3]}\n`;
+            content += `あなたの解答: ${m.selectedLetter} → ${selectedDetail}\n`;
+            content += `正答: ${m.correctLetter} → ${correctDetail}\n`;
+            content += `解説: ${m.explanation}\n----------------------------------------------------------------\n\n`;
+        });
+        let fileName = "jac_anzen_housei_mistakes.txt";
+        const pathName = window.location.pathname;
+        const base = pathName.substring(pathName.lastIndexOf('/')+1).replace(/\.html?$/i, '');
+        if(base && base !== "") fileName = `${base}_mistakes.txt`;
+        const blob = new Blob([content], {type:"text/plain;charset=utf-8"});
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(blob);
+        link.href = url;
+        link.download = fileName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+    }
+
+    function goPrev() { if(currentIndex>0) { currentIndex--; renderCurrentQuestion();} else feedbackArea.innerHTML="最初の問題です。"; }
+    function goNext() { if(currentIndex<QUESTIONS.length-1) { currentIndex++; renderCurrentQuestion();} else feedbackArea.innerHTML="最終問題です。採点ボタンを押してください。"; }
+
+    function init() {
+        renderCurrentQuestion();
+        prevBtn.addEventListener('click', goPrev);
+        nextBtn.addEventListener('click', goNext);
+        submitBtn.addEventListener('click', gradingAndShowResult);
+        downloadTxtBtn.addEventListener('click', downloadMistakesTxt);
+        submitted = false;
+        scorePanel.style.display = "none";
+        mistakeAreaWrapper.style.display = "none";
+        feedbackArea.innerHTML = "各問の選択肢をクリックして解答。20問終わったら採点ボタンで結果表示。";
+    }
+    init();
+</script>
+</body>
+</html>
